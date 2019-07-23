@@ -4,7 +4,7 @@ import datetime
 from PIL import Image
 from shutil import copyfile
 
-supported_file_extensions = [
+SUPPORTED_FILE_EXTENSIONS = [
     "jpg"
 ]
 
@@ -17,13 +17,13 @@ def get_arg_parser():
 
 
 def get_file_names_dates(source_folder: str) -> list:
-    a = []
+    _file_date_list = []
     for s in os.listdir(source_folder):
-        filename, fileextension = os.path.splitext(s)
-        if os.path.isfile(os.path.join(source_folder, s)) and fileextension[1:].lower() in supported_file_extensions:
+        _, _file_extension = os.path.splitext(s)
+        if os.path.isfile(os.path.join(source_folder, s)) and _file_extension[1:].lower() in SUPPORTED_FILE_EXTENSIONS:
             d_s = Image.open(os.path.join(source_folder, s))._getexif()[36867]
-            a.append((s, datetime.datetime.strptime(d_s, "%Y:%m:%d %H:%M:%S")))
-    return a
+            _file_date_list.append((s, datetime.datetime.strptime(d_s, "%Y:%m:%d %H:%M:%S")))
+    return _file_date_list
 
 
 def copy_files(files_dates: list, target_folder: str, source_folder: str) -> None:
