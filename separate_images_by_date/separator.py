@@ -37,3 +37,5 @@ def copy_files(files_dates: list, target_folder: str, source_folder: str) -> Non
 if __name__ == "__main__":
     parser = get_arg_parser()
     args = parser.parse_args()
+    file_dates = get_file_names_dates(args.source_folder)
+    copy_files(file_dates, args.target_folder, args.source_folder)
